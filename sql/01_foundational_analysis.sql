@@ -40,16 +40,21 @@ WHERE NOT EXISTS (
 
 -- Task 3: Inactive customers (120+ days)
 
-WITH TAB1 AS (
+WITH last_order AS (
     SELECT custId, MAX(orderDate) AS latest_order_date
     FROM salesorder
-    GROUP BY 1
+    GROUP BY custId
+),
+inactive_customers AS (
+    SELECT
+        custId, latest_order_date,
+        TIMESTAMPDIFF(DAY, latest_order_date, CURRENT_DATE()) AS days_since_last_order
+    FROM last_order
 )
-SELECT *, TIMESTAMPDIFF(DAY, latest_order_date, CURRENT_DATE()) AS date_diff
-FROM TAB1
-WHERE TIMESTAMPDIFF(DAY, latest_order_date, CURRENT_DATE()) > 120;
-
-
+SELECT custId, latest_order_date, days_since_last_order
+FROM inactive_customers
+WHERE days_since_last_order > 120
+ORDER BY days_since_last_order DESC;
 
 -- Task 4: Average vs median order value
 
