@@ -26,17 +26,21 @@ FROM ranked_products
 WHERE product_rank <= 3
 ORDER BY country, product_rank;
 
-
 -- Task 2: Month-over-month revenue change
 
-
-
-
-
-
-
-
-
+WITH monthly_revenue AS (
+    SELECT DATE_FORMAT(s.orderDate, '%Y-%m-01') AS month_start,
+           SUM((od.unitPrice * od.quantity) * (1 - od.discount)) AS total_revenue
+    FROM salesorder s
+    LEFT JOIN orderdetail od ON s.orderId = od.orderId
+    GROUP BY DATE_FORMAT(s.orderDate, '%Y-%m-01')
+)
+SELECT month_start,
+       ROUND(total_revenue, 2) AS revenue,
+       ROUND(LAG(total_revenue) OVER (ORDER BY month_start), 2) AS prev_month_revenue,
+       ROUND(total_revenue - LAG(total_revenue) OVER (ORDER BY month_start), 2) AS revenue_delta
+FROM monthly_revenue
+ORDER BY month_start;
 
 
 -- Task 3: Product share within an order
