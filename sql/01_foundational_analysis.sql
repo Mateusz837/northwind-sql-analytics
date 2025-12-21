@@ -84,10 +84,48 @@ SELECT ROUND(median_value, 2) AS median,
        ROUND(average_value, 2) AS average
 FROM median_calc, average_calc;
 
-
-
-
-
-
-
 -- Task 5: Top product category per customer
+
+WITH customer_category_qty AS (
+    SELECT
+        s.custId, c.companyName, cat.categoryName,
+        SUM(od.quantity) AS total_qty
+    FROM salesorder s
+    LEFT JOIN customer c ON s.custId = c.custId
+    LEFT JOIN orderdetail od ON s.orderId = od.orderId
+    LEFT JOIN product p ON od.productId = p.productId
+    LEFT JOIN category cat ON p.categoryId = cat.categoryId
+    GROUP BY
+        s.custId,c.companyName,cat.categoryName
+),
+ranked_categories AS (
+    SELECT
+        custId, companyName, categoryName, total_qty,
+        DENSE_RANK() OVER (PARTITION BY custId ORDER BY total_qty DESC) AS category_rank
+    FROM customer_category_qty
+)
+SELECT
+    custId, companyName, categoryName, total_qty, category_rank
+FROM ranked_categories
+WHERE category_rank <= 5
+ORDER BY custId, category_rank, categoryName;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
