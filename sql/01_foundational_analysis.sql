@@ -1,0 +1,2 @@
+-- Foundational SQL analysis
+-- Queries from the Northwind SQL portfolio
