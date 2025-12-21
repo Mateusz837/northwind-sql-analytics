@@ -112,6 +112,19 @@ FROM median_calc, average_calc, stddev_calc;
 
 -- Task 6: Cumulative revenue over time
 
+WITH monthly_revenue AS (
+    SELECT DATE_FORMAT(s.orderDate, '%Y-%m-01') AS month_start,
+           SUM((od.unitPrice * od.quantity) * (1 - od.discount)) AS total_revenue
+    FROM salesorder s
+    LEFT JOIN orderdetail od ON s.orderId = od.orderId
+    GROUP BY DATE_FORMAT(s.orderDate, '%Y-%m-01')
+)
+SELECT month_start,
+       ROUND(total_revenue, 2) AS total_revenue,
+       ROUND(SUM(total_revenue) OVER (ORDER BY month_start ROWS UNBOUNDED PRECEDING), 2) AS cumulative_revenue
+FROM monthly_revenue
+ORDER BY month_start;
+
 
 -- Task 7: Month-over-month seasonality ratio
 
