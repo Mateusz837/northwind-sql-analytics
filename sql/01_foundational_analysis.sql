@@ -58,5 +58,36 @@ ORDER BY days_since_last_order DESC;
 
 -- Task 4: Average vs median order value
 
+WITH order_revenue AS (
+    SELECT od.orderId,
+           SUM((od.unitPrice * od.quantity) * (1 - od.discount)) AS total_revenue
+    FROM salesorder so
+    LEFT JOIN orderdetail od ON so.orderId = od.orderId
+    GROUP BY od.orderId
+),
+revenue_ranked AS (
+    SELECT orderId, total_revenue,
+           ROW_NUMBER() OVER (ORDER BY total_revenue) AS rn,
+           COUNT(*) OVER () AS total_count
+    FROM order_revenue
+),
+median_calc AS (
+    SELECT AVG(total_revenue) AS median_value
+    FROM revenue_ranked
+    WHERE rn IN (FLOOR((total_count + 1) / 2), CEIL((total_count + 1) / 2))
+),
+average_calc AS (
+    SELECT AVG(total_revenue) AS average_value
+    FROM revenue_ranked
+)
+SELECT ROUND(median_value, 2) AS median,
+       ROUND(average_value, 2) AS average
+FROM median_calc, average_calc;
+
+
+
+
+
+
 
 -- Task 5: Top product category per customer
