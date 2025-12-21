@@ -45,6 +45,19 @@ ORDER BY month_start;
 
 -- Task 3: Product share within an order
 
+WITH order_product_revenue AS (
+    SELECT s.orderId, p.productName,
+           SUM((od.unitPrice * od.quantity) * (1 - od.discount)) AS product_revenue
+    FROM salesorder s
+    LEFT JOIN orderdetail od ON s.orderId = od.orderId
+    LEFT JOIN product p ON od.productId = p.productId
+    GROUP BY s.orderId, p.productName
+)
+SELECT orderId, productName,
+       ROUND(product_revenue, 2) AS product_revenue,
+       ROUND(product_revenue / SUM(product_revenue) OVER (PARTITION BY orderId) * 100, 2) AS share_in_order_pct
+FROM order_product_revenue
+ORDER BY orderId, share_in_order_pct DESC, productName;
 
 -- Task 4: Order value quartiles
 
