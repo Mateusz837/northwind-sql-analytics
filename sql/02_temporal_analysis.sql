@@ -61,6 +61,19 @@ ORDER BY orderId, share_in_order_pct DESC, productName;
 
 -- Task 4: Order value quartiles
 
+WITH order_revenue AS (
+    SELECT s.orderId,
+           SUM((od.unitPrice * od.quantity) * (1 - od.discount)) AS total_revenue
+    FROM salesorder s
+    LEFT JOIN orderdetail od ON s.orderId = od.orderId
+    GROUP BY s.orderId
+)
+SELECT orderId,
+       ROUND(total_revenue, 2) AS total_revenue,
+       NTILE(4) OVER (ORDER BY total_revenue DESC) AS revenue_quartile
+FROM order_revenue
+ORDER BY revenue_quartile, total_revenue DESC, orderId;
+
 
 -- Task 5: Mean, median, and standard deviation of order values
 
