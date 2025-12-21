@@ -27,8 +27,16 @@ WHERE product_rank <= 3
 ORDER BY country, product_rank;
 
 
-
 -- Task 2: Month-over-month revenue change
+
+
+
+
+
+
+
+
+
 
 
 -- Task 3: Product share within an order
