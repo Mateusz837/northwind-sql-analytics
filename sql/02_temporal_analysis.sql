@@ -78,6 +78,38 @@ ORDER BY revenue_quartile, total_revenue DESC, orderId;
 -- Task 5: Mean, median, and standard deviation of order values
 
 
+WITH order_revenue AS (
+    SELECT od.orderId,
+           SUM((od.unitPrice * od.quantity) * (1 - od.discount)) AS total_revenue
+    FROM salesorder so
+    LEFT JOIN orderdetail od ON so.orderId = od.orderId
+    GROUP BY od.orderId
+),
+revenue_ranked AS (
+    SELECT orderId, total_revenue,
+           ROW_NUMBER() OVER (ORDER BY total_revenue) AS rn,
+           COUNT(*) OVER () AS total_count
+    FROM order_revenue
+),
+median_calc AS (
+    SELECT AVG(total_revenue) AS median_value
+    FROM revenue_ranked
+    WHERE rn IN (FLOOR((total_count + 1) / 2), CEIL((total_count + 1) / 2))
+),
+average_calc AS (
+    SELECT AVG(total_revenue) AS average_value
+    FROM revenue_ranked
+),
+stddev_calc AS (
+    SELECT STDDEV(total_revenue) AS std_value
+    FROM revenue_ranked
+)
+SELECT ROUND(median_value, 2) AS median,
+       ROUND(average_value, 2) AS average,
+       ROUND(std_value, 2) AS std
+FROM median_calc, average_calc, stddev_calc;
+
+
 -- Task 6: Cumulative revenue over time
 
 
