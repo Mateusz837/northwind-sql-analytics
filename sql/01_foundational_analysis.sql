@@ -30,8 +30,25 @@ ORDER BY total_revenue DESC;
 
 -- Task 2: Products never ordered
 
+SELECT p.productId
+FROM product AS p
+WHERE NOT EXISTS (
+    SELECT *
+    FROM orderdetail AS sod
+    WHERE sod.productId = p.productId
+);
 
 -- Task 3: Inactive customers (120+ days)
+
+WITH TAB1 AS (
+    SELECT custId, MAX(orderDate) AS latest_order_date
+    FROM salesorder
+    GROUP BY 1
+)
+SELECT *, TIMESTAMPDIFF(DAY, latest_order_date, CURRENT_DATE()) AS date_diff
+FROM TAB1
+WHERE TIMESTAMPDIFF(DAY, latest_order_date, CURRENT_DATE()) > 120;
+
 
 
 -- Task 4: Average vs median order value
