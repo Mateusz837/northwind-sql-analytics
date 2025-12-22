@@ -128,6 +128,42 @@ ORDER BY month_start;
 
 -- Task 7: Month-over-month seasonality ratio
 
+WITH monthly_revenue AS (
+    SELECT DATE_FORMAT(s.orderDate, '%Y-%m-01') AS month_start,
+           SUM((od.unitPrice * od.quantity) * (1 - od.discount)) AS total_revenue
+    FROM salesorder s
+    LEFT JOIN orderdetail od ON s.orderId = od.orderId
+    GROUP BY DATE_FORMAT(s.orderDate, '%Y-%m-01')
+),
+revenue_with_prev AS (
+    SELECT month_start, total_revenue,
+           LAG(total_revenue) OVER (ORDER BY month_start) AS prev_month_revenue
+    FROM monthly_revenue
+)
+SELECT month_start,
+       ROUND(total_revenue, 2) AS total_revenue,
+       ROUND(prev_month_revenue, 2) AS prev_month_revenue,
+       ROUND(total_revenue / NULLIF(prev_month_revenue, 0), 2) AS month_ratio
+FROM revenue_with_prev
+ORDER BY month_start;
+
 
 -- Task 8: Revenue trend approximation (rolling average)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
