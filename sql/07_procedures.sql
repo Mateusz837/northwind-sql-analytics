@@ -27,3 +27,29 @@ CALL GetCustomerOrders(34);
 -- Task 2: Product_Country(country) – top products by country
 -- comment: A simple stored procedure for quick top-product lookups per market
 
+-- Task 2: Product_Country(country) – top products by country
+
+DELIMITER $$
+
+CREATE PROCEDURE Product_Country(IN country VARCHAR(20))
+BEGIN
+    SELECT productName,
+           total_sold,
+           DENSE_RANK() OVER (ORDER BY total_sold DESC) AS rnk
+    FROM (
+        SELECT p.productName,
+               SUM(od.quantity) AS total_sold
+        FROM salesorder s
+        LEFT JOIN orderdetail od ON s.orderId = od.orderId
+        LEFT JOIN product p ON p.productId = od.productId
+        WHERE s.shipCountry = country
+        GROUP BY p.productName
+    ) tab1
+    WHERE total_sold IS NOT NULL
+    ORDER BY total_sold DESC
+    LIMIT 5;
+END $$
+
+DELIMITER ;
+
+CALL Product_Country('Germany');
