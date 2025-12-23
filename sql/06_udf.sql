@@ -20,6 +20,7 @@ FROM salesorder
 
 -- Task 2: discount(price, discount) – compute discounted price
 -- comment: Encapsulating discount calculation ensures consistency across reports
+    
 DELIMITER $$
 CREATE FUNCTION discounted_price(price DECIMAL(10,2), disc DECIMAL(10,2))
 RETURNS DECIMAL(10,2)
