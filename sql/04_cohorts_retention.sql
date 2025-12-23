@@ -59,8 +59,11 @@ FROM active_customers
 ORDER BY cohort_mnth, order_month;
 
 
+-- Task 4: Return Analysis – Time to Repurchase (Days Between Orders)
 
--- Task 4: Cohort revenue over time (optional: if included in your Word version)
+
+
+
 
 
 -- Task 5: Cohort-level KPIs (e.g., avg order value, orders per customer)
