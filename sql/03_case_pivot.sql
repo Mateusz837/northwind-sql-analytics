@@ -23,6 +23,17 @@ FROM order_revenue;
 
 -- Task 2: Order status / operational labeling with CASE
 
+SELECT c.custId, c.companyName, COUNT(DISTINCT s.orderId) AS total_orders,
+       SUM(CASE WHEN s.shippedDate IS NULL THEN 1 ELSE 0 END) AS pending_orders,
+       SUM(CASE WHEN s.shippedDate IS NOT NULL THEN 1 ELSE 0 END) AS fully_delivered,
+       CASE WHEN SUM(CASE WHEN s.shippedDate IS NULL THEN 1 ELSE 0 END) = 0
+            THEN 'Fully_Delivered'
+            ELSE 'Pending_Orders'
+       END AS delivery_status
+FROM salesorder s
+LEFT JOIN customer c ON s.custId = c.custId
+GROUP BY c.custId, c.companyName;
+
 
 -- Task 3: Pivot: revenue by category (conditional aggregation)
 
