@@ -5,7 +5,7 @@
 
 -- Task 1: Top 3 products by revenue in each country
 
-WITH product_revenue_by_country AS (
+WITH product_revenue_by_country AS ( 
     SELECT
         c.country, p.productName,
         SUM((od.unitPrice * od.quantity) * (1 - od.discount)) AS total_revenue
