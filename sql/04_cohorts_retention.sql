@@ -61,8 +61,28 @@ ORDER BY cohort_mnth, order_month;
 
 -- Task 4: Return Analysis – Time to Repurchase (Days Between Orders)
 
+-- Task 4: Return Analysis – Time to Repurchase (Days Between Orders)
 
-
+WITH customer_orders AS (
+    SELECT s.custId, DATE(s.orderDate) AS order_date
+    FROM salesorder s
+    LEFT JOIN customer c ON s.custId = c.custId
+    GROUP BY s.custId, DATE(s.orderDate)
+),
+orders_with_prev AS (
+    SELECT custId, order_date,
+           LAG(order_date) OVER (PARTITION BY custId ORDER BY order_date) AS prev_date
+    FROM customer_orders
+),
+order_gaps AS (
+    SELECT custId, order_date, prev_date,
+           TIMESTAMPDIFF(DAY, prev_date, order_date) AS diff_dates
+    FROM orders_with_prev
+)
+SELECT DISTINCT custId,
+       ROUND(AVG(diff_dates) OVER (PARTITION BY custId)) AS avg_days_between_orders
+FROM order_gaps
+WHERE diff_dates IS NOT NULL;
 
 
 
