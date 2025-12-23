@@ -37,8 +37,36 @@ GROUP BY c.custId, c.companyName;
 
 -- Task 3: Pivot: revenue by category (conditional aggregation)
 
+WITH yearly_category_revenue AS (
+    SELECT YEAR(s.orderDate) AS YR,
+           ce.categoryName,
+           ROUND(SUM((o.unitPrice * o.quantity) * (1 - o.discount)), 2) AS total_revenue
+    FROM salesorder s
+    LEFT JOIN orderdetail o ON s.orderId = o.orderId
+    LEFT JOIN product p ON o.productId = p.productId
+    LEFT JOIN category ce ON p.categoryId = ce.categoryId
+    GROUP BY YEAR(s.orderDate), ce.categoryName
+)
+SELECT YR,
+       SUM(CASE WHEN categoryName = 'Beverages' THEN total_revenue ELSE 0 END) AS Beverages,
+       SUM(CASE WHEN categoryName = 'Condiments' THEN total_revenue ELSE 0 END) AS Condiments,
+       SUM(CASE WHEN categoryName = 'Confections' THEN total_revenue ELSE 0 END) AS Confections,
+       SUM(CASE WHEN categoryName = 'Dairy Products' THEN total_revenue ELSE 0 END) AS `Dairy Products`,
+       SUM(CASE WHEN categoryName = 'Grains/Cereals' THEN total_revenue ELSE 0 END) AS `Grains/Cereals`,
+       SUM(CASE WHEN categoryName = 'Meat/Poultry' THEN total_revenue ELSE 0 END) AS `Meat/Poultry`,
+       SUM(CASE WHEN categoryName = 'Produce' THEN total_revenue ELSE 0 END) AS Produce,
+       SUM(CASE WHEN categoryName = 'Seafood' THEN total_revenue ELSE 0 END) AS Seafood
+FROM yearly_category_revenue
+GROUP BY YR;
+
 
 -- Task 4: Pivot: monthly revenue by selected categories
+
+
+
+
+
+
 
 
 -- Task 5: Top-N within groups using window functions + filtering
