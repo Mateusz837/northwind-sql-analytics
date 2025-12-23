@@ -61,7 +61,6 @@ ORDER BY cohort_mnth, order_month;
 
 -- Task 4: Return Analysis – Time to Repurchase (Days Between Orders)
 
--- Task 4: Return Analysis – Time to Repurchase (Days Between Orders)
 
 WITH customer_orders AS (
     SELECT s.custId, DATE(s.orderDate) AS order_date
@@ -85,6 +84,4 @@ FROM order_gaps
 WHERE diff_dates IS NOT NULL;
 
 
-
--- Task 5: Cohort-level KPIs (e.g., avg order value, orders per customer)
 
