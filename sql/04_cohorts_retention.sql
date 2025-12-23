@@ -34,8 +34,30 @@ GROUP BY ch.cohort_mnth, order_month
 ORDER BY ch.cohort_mnth, order_month;
 
 
+-- Task 3: Calculating Month-on-Month Retention Rate
 
--- Task 3: Retention rate by cohort (percentage of active customers)
+ WITH cohort AS (
+    SELECT s.custId, c.companyName,
+           MIN(DATE_FORMAT(s.orderDate, '%Y-%m-01')) AS cohort_mnth,
+           MIN(DATE(s.orderDate)) AS first_purchase
+    FROM salesorder s
+    LEFT JOIN customer c ON s.custId = c.custId
+    GROUP BY s.custId, c.companyName
+),
+active_customers AS (
+    SELECT ch.cohort_mnth,
+           DATE_FORMAT(s.orderDate, '%Y-%m-01') AS order_month,
+           COUNT(DISTINCT s.custId) AS active_customers
+    FROM cohort ch
+    INNER JOIN salesorder s ON ch.custId = s.custId
+    GROUP BY ch.cohort_mnth, order_month
+)
+SELECT cohort_mnth, order_month, active_customers,
+       TIMESTAMPDIFF(MONTH, cohort_mnth, order_month) AS month_index,
+       ROUND(active_customers / MAX(active_customers) OVER (PARTITION BY cohort_mnth) * 100, 2) AS retention_rate
+FROM active_customers
+ORDER BY cohort_mnth, order_month;
+
 
 
 -- Task 4: Cohort revenue over time (optional: if included in your Word version)
