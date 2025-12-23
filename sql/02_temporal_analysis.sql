@@ -1,8 +1,9 @@
--- =========================================================
+-- ========================================================
 -- Module 2: Temporal & Statistical Analysis
--- =========================================================
+-- ========================================================
 
--- Task 1: Top 3 products by revenue per country
+
+-- Task 1: Top 3 products by revenue in each country
 
 WITH product_revenue_by_country AS (
     SELECT
@@ -43,7 +44,7 @@ FROM monthly_revenue
 ORDER BY month_start;
 
 
--- Task 3: Product share within an order
+-- Task 3: Product share in the basket 
 
 WITH order_product_revenue AS (
     SELECT s.orderId, p.productName,
@@ -59,7 +60,7 @@ SELECT orderId, productName,
 FROM order_product_revenue
 ORDER BY orderId, share_in_order_pct DESC, productName;
 
--- Task 4: Order value quartiles
+-- Task 4: Order value quartiles (Quartile baskets)
 
 WITH order_revenue AS (
     SELECT s.orderId,
