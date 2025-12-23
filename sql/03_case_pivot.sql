@@ -84,4 +84,3 @@ FROM moving_average
 ORDER BY mnth;
 
 
--- Task 5: Top-N within groups using window functions + filtering
