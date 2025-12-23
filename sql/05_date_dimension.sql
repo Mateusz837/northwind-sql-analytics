@@ -22,21 +22,22 @@ SELECT date_value,
        WEEK(date_value) AS week_num
 FROM dates;
 
-
 -- Task 2: Days without orders (daily activity)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+SELECT d.date_value, COUNT(DISTINCT s.orderId) AS order_count
+FROM dim_date d
+LEFT JOIN salesorder s ON DATE(s.orderDate) = d.date_value
+GROUP BY d.date_value
+HAVING COUNT(DISTINCT s.orderId) = 0;
 
 -- Task 3: Days without sales per month
+
+
+
+
+
+
+
+
+
+
