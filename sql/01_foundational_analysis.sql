@@ -4,7 +4,7 @@
 
 -- Task 1: Top 5 customers by revenue
 
-WITH customer_revenue AS (
+WITH customer_revenue AS ( 
     SELECT
         c.custId, c.companyName,
         SUM((od.unitPrice * od.quantity) * (1 - od.discount)) AS total_revenue
