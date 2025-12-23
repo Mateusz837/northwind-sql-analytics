@@ -2,7 +2,7 @@
 -- Module 1: Foundational Analysis
 -- =========================================================
 
--- Task 1: Top customers by revenue
+-- Task 1: Top 5 customers by revenue
 
 WITH customer_revenue AS (
     SELECT
@@ -38,7 +38,7 @@ WHERE NOT EXISTS (
     WHERE sod.productId = p.productId
 );
 
--- Task 3: Inactive customers (120+ days)
+-- Task 3: Customers with last order > 120 days ago
 
 WITH last_order AS (
     SELECT custId, MAX(orderDate) AS latest_order_date
