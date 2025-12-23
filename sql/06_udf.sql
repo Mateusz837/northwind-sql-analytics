@@ -1,6 +1,5 @@
 -- =========================================================
 -- Module 6: User-Defined Functions (UDF)
-
 -- =========================================================
 
 -- Task 1: order_age(order_date) – days since order
@@ -36,6 +35,7 @@ FROM orderdetail
 
 -- Task 3: revenue(unit_price, quantity, discount) – revenue after discount
 -- comment: Simplifies revenue calculations in queries and improves readability
+    
 DELIMITER $$
 
 CREATE FUNCTION Revenue(unit_price DECIMAL(10,2), quantity INT, discount DECIMAL(10,2))
