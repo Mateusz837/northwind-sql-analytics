@@ -60,13 +60,28 @@ FROM yearly_category_revenue
 GROUP BY YR;
 
 
--- Task 4: Pivot: monthly revenue by selected categories
+-- Task 4: Rolling Average + CASE – Trend Analysis
 
-
-
-
-
-
+WITH monthly_revenue AS (
+    SELECT DATE_FORMAT(s.orderDate, '%Y-%m-01') AS mnth,
+           ROUND(SUM((o.unitPrice * o.quantity) * (1 - o.discount)), 2) AS total_revenue
+    FROM salesorder s
+    LEFT JOIN orderdetail o ON s.orderId = o.orderId
+    GROUP BY DATE_FORMAT(s.orderDate, '%Y-%m-01')
+),
+moving_average AS (
+    SELECT mnth, total_revenue,
+           ROUND(AVG(total_revenue) OVER (ORDER BY mnth ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS three_month_avg
+    FROM monthly_revenue
+)
+SELECT mnth, total_revenue, three_month_avg,
+       CASE
+           WHEN total_revenue < three_month_avg THEN 'Below Trend'
+           WHEN total_revenue = three_month_avg THEN 'Within Trend'
+           ELSE 'Above Trend'
+       END AS trend_status
+FROM moving_average
+ORDER BY mnth;
 
 
 -- Task 5: Top-N within groups using window functions + filtering
