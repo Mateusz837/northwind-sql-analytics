@@ -3,7 +3,7 @@
 -- =========================================================
 
 -- Task 1: order_age(order_date) – days since order
--- comment: Handy for computing order age directly in queries and for SLA checks 
+-- Handy for computing order age directly in queries and for SLA checks 
 
 DELIMITER $$
 CREATE FUNCTION order_age(order_date DATE)
@@ -18,7 +18,7 @@ SELECT orderId, orderDate, order_age(orderDate) AS days_since_order
 FROM salesorder
 
 -- Task 2: discount(price, discount) – compute discounted price
--- comment: Encapsulating discount calculation ensures consistency across reports
+-- Encapsulating discount calculation ensures consistency across reports
     
 DELIMITER $$
 CREATE FUNCTION discounted_price(price DECIMAL(10,2), disc DECIMAL(10,2))
@@ -34,7 +34,7 @@ SELECT orderId, unitPrice, discount,
 FROM orderdetail
 
 -- Task 3: revenue(unit_price, quantity, discount) – revenue after discount
--- comment: Simplifies revenue calculations in queries and improves readability
+-- Simplifies revenue calculations in queries and improves readability
     
 DELIMITER $$
 
