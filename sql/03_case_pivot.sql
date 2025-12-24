@@ -4,6 +4,7 @@
 -- =========================================================
 
 -- Task 1: CASE Conditional Logic – Order Classification
+-- Label orders as Small/Medium/Large by value to build segments for KPI reporting and marketing rules
 
 WITH order_revenue AS (
     SELECT od.orderId,
@@ -22,6 +23,7 @@ SELECT orderId,
 FROM order_revenue;
 
 -- Task 2: Order status / operational labeling with CASE
+-- Monitor customers by delivery status to ensure SLAs and follow-up for pending shipments.
 
 SELECT c.custId, c.companyName, COUNT(DISTINCT s.orderId) AS total_orders,
        SUM(CASE WHEN s.shippedDate IS NULL THEN 1 ELSE 0 END) AS pending_orders,
@@ -34,8 +36,8 @@ FROM salesorder s
 LEFT JOIN customer c ON s.custId = c.custId
 GROUP BY c.custId, c.companyName;
 
-
 -- Task 3: Pivot: revenue by category (conditional aggregation)
+-- Build a pivot-like report showing category revenues as columns per year
 
 WITH yearly_category_revenue AS (
     SELECT YEAR(s.orderDate) AS YR,
@@ -59,8 +61,8 @@ SELECT YR,
 FROM yearly_category_revenue
 GROUP BY YR;
 
-
 -- Task 4: Rolling Average + CASE – Trend Analysis
+-- Mark months above/below 3-month average to identify trend shifts
 
 WITH monthly_revenue AS (
     SELECT DATE_FORMAT(s.orderDate, '%Y-%m-01') AS mnth,
