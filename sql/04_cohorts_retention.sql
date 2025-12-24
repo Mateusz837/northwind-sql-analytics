@@ -3,6 +3,7 @@
 -- =========================================================
 
 -- Task 1: Identifying Date of First Purchase 
+-- Assign each customer to the month of their first purchase to enable cohort tracking
 
 SELECT
     s.custId, c.companyName,
@@ -13,9 +14,8 @@ LEFT JOIN customer c ON s.custId = c.custId
 GROUP BY s.custId, c.companyName
 ORDER BY cohort_mnth;
 
-
 -- Task 2: Number of Returning Customers Month-by-Month
-
+-- Track how many customers from each cohort return in subsequent months to measure loyalty
 
 WITH cohort AS (
     SELECT s.custId, c.companyName,
@@ -33,8 +33,8 @@ INNER JOIN salesorder s ON ch.custId = s.custId
 GROUP BY ch.cohort_mnth, order_month
 ORDER BY ch.cohort_mnth, order_month;
 
-
 -- Task 3: Calculating Month-on-Month Retention Rate
+-- Express retention as a percentage of the cohort to normalize across cohort sizes
 
  WITH cohort AS (
     SELECT s.custId, c.companyName,
@@ -58,9 +58,8 @@ SELECT cohort_mnth, order_month, active_customers,
 FROM active_customers
 ORDER BY cohort_mnth, order_month;
 
-
 -- Task 4: Return Analysis – Time to Repurchase (Days Between Orders)
-
+-- Understand typical time between purchases to time marketing and replenishment triggers.
 
 WITH customer_orders AS (
     SELECT s.custId, DATE(s.orderDate) AS order_date
