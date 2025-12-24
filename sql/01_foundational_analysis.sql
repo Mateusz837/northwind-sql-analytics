@@ -3,6 +3,7 @@
 -- =========================================================
 
 -- Task 1: Top 5 customers by revenue
+-- Identify VIP customers who have spent the most overall. Useful for prioritization, targeted promotions, and designing loyalty programs
 
 WITH customer_revenue AS ( 
     SELECT
@@ -28,7 +29,9 @@ FROM ranked_customers
 WHERE revenue_rank <= 5
 ORDER BY total_revenue DESC;
 
+
 -- Task 2: Products never ordered
+-- Find products that were never ordered. Useful for clearance, renaming, pricing adjustments, or removing legacy items
 
 SELECT p.productId
 FROM product AS p
@@ -39,6 +42,7 @@ WHERE NOT EXISTS (
 );
 
 -- Task 3: Customers with last order > 120 days ago
+-- Identify customers who haven't purchased for a long period (120+ days) — a starting point for win-back campaigns
 
 WITH last_order AS (
     SELECT custId, MAX(orderDate) AS latest_order_date
@@ -57,6 +61,7 @@ WHERE days_since_last_order > 120
 ORDER BY days_since_last_order DESC;
 
 -- Task 4: Average vs median order value
+-- Compare average order value to median to understand the influence of outliers and set thresholds (e.g., free shipping).
 
 WITH order_revenue AS (
     SELECT od.orderId,
@@ -85,6 +90,7 @@ SELECT ROUND(median_value, 2) AS median,
 FROM median_calc, average_calc;
 
 -- Task 5: Top product category per customer
+-- Determine a customer's favorite product category by quantity purchased—valuable for personalization and recommendations
 
 WITH customer_category_qty AS (
     SELECT
@@ -109,23 +115,4 @@ SELECT
 FROM ranked_categories
 WHERE category_rank <= 5
 ORDER BY custId, category_rank, categoryName;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
