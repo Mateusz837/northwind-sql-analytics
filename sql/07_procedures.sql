@@ -3,7 +3,7 @@
 -- =========================================================
 
 -- Task 1: GetCustomerOrders(cust_code) – list orders for a customer
--- comment: Useful for customer-service portals and account summaries
+-- Useful for customer-service portals and account summaries
 
 DELIMITER $$
 
@@ -25,9 +25,7 @@ DELIMITER ;
 CALL GetCustomerOrders(34);
 
 -- Task 2: Product_Country(country) – top products by country
--- comment: A simple stored procedure for quick top-product lookups per market
-
--- Task 2: Product_Country(country) – top products by country
+-- A simple stored procedure for quick top-product lookups per market
 
 DELIMITER $$
 
