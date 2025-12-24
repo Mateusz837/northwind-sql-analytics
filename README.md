@@ -1,10 +1,10 @@
 # Northwind SQL Analytics
 
 ## Overview
-This repository contains a SQL data analysis case study based on the classic Northwind sample database.
-The project focuses on applying analytical and business-oriented SQL techniques to answer real-world questions related to revenue, customer behavior, retention, and operational performance.
 
-The analysis was designed as a portfolio project for Data Analyst / BI Analyst roles, emphasizing query readability, logical structure, and business interpretation rather than query optimization alone.
+This repository contains a SQL data analysis case study based on the classic Northwind sample database. The project focuses on applying analytical and business-oriented SQL techniques to answer real-world questions related to revenue, customer behavior, retention, and operational performance.
+
+The analysis was designed as a portfolio project for Data Analyst / BI Analyst roles, emphasizing query readability, logical structure, and business interpretation, alongside solid SQL practices.
 
 ---
 
