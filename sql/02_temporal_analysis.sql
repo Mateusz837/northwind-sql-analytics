@@ -2,8 +2,8 @@
 -- Module 2: Temporal & Statistical Analysis
 -- ========================================================
 
-
 -- Task 1: Top 3 products by revenue in each country
+-- Identify local bestsellers to plan inventory and marketing per market
 
 WITH product_revenue_by_country AS ( 
     SELECT
@@ -28,6 +28,7 @@ WHERE product_rank <= 3
 ORDER BY country, product_rank;
 
 -- Task 2: Month-over-month revenue change
+-- Observe month-on-month increases or decreases to react operationally
 
 WITH monthly_revenue AS (
     SELECT DATE_FORMAT(s.orderDate, '%Y-%m-01') AS month_start,
@@ -45,6 +46,7 @@ ORDER BY month_start;
 
 
 -- Task 3: Product share in the basket 
+-- Determine what contributes to the basket value—key for cross-selling strategies
 
 WITH order_product_revenue AS (
     SELECT s.orderId, p.productName,
@@ -61,6 +63,7 @@ FROM order_product_revenue
 ORDER BY orderId, share_in_order_pct DESC, productName;
 
 -- Task 4: Order value quartiles (Quartile baskets)
+-- Divide orders into quartiles to apply different operational or marketing policies
 
 WITH order_revenue AS (
     SELECT s.orderId,
@@ -77,7 +80,7 @@ ORDER BY revenue_quartile, total_revenue DESC, orderId;
 
 
 -- Task 5: Mean, median, and standard deviation of order values
-
+-- Understand typical order value and variability to segment customers and personalize offers
 
 WITH order_revenue AS (
     SELECT od.orderId,
@@ -112,6 +115,7 @@ FROM median_calc, average_calc, stddev_calc;
 
 
 -- Task 6: Cumulative revenue over time
+-- See how revenue accumulates over time to track progress towards goals
 
 WITH monthly_revenue AS (
     SELECT DATE_FORMAT(s.orderDate, '%Y-%m-01') AS month_start,
@@ -126,8 +130,8 @@ SELECT month_start,
 FROM monthly_revenue
 ORDER BY month_start;
 
-
 -- Task 7: Month-over-month seasonality ratio
+-- Detect seasonal patterns to predict demand and manage inventory
 
 WITH monthly_revenue AS (
     SELECT DATE_FORMAT(s.orderDate, '%Y-%m-01') AS month_start,
@@ -150,6 +154,7 @@ ORDER BY month_start;
 
 
 -- Task 8: Revenue trend approximation (rolling average)
+-- Approximate time trend to quickly understand if revenue is increasing, decreasing, or stable
 
 WITH monthly_revenue AS (
     SELECT DATE_FORMAT(s.orderDate, '%Y-%m-01') AS month_start,
@@ -170,20 +175,4 @@ SELECT month_start,
        ROUND(AVG(total_revenue) OVER (ORDER BY month_start ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS rolling_3m_avg
 FROM revenue_with_prev
 ORDER BY month_start;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
