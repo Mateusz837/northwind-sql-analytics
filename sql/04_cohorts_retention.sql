@@ -3,7 +3,7 @@
 -- =========================================================
 
 -- Task 1: Identifying Date of First Purchase 
--- Assign each customer to the month of their first purchase to enable cohort tracking
+-- Assign each customer to the month of their first purchase to enable cohort tracking 
 
 SELECT
     s.custId, c.companyName,
