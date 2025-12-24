@@ -48,19 +48,20 @@ The analysis was designed as a portfolio project for Data Analyst / BI Analyst r
 
 ## Repository Structure
 
- northwind-sql-analytics/
+```
+northwind-sql-analytics/
 ├── README.md
 ├── docs/
-│ └── Northwind_SQL_Portfolio.pdf
+│   └── Northwind_SQL_Portfolio.pdf
 └── sql/
-├── 01_foundational_analysis.sql
-├── 02_temporal_analysis.sql
-├── 03_case_pivot.sql
-├── 04_cohorts_retention.sql
-├── 05_date_dimension.sql
-├── 06_udf.sql
-└── 07_procedures.sql
-
+    ├── 01_foundational_analysis.sql
+    ├── 02_temporal_analysis.sql
+    ├── 03_case_pivot.sql
+    ├── 04_cohorts_retention.sql
+    ├── 05_date_dimension.sql
+    ├── 06_udf.sql
+    └── 07_procedures.sql
+```
 
  ---
 
