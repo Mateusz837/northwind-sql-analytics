@@ -3,7 +3,7 @@
 -- =========================================================
 
 -- Task 1: order_age(order_date) – days since order
--- comment: Handy for computing order age directly in queries and for SLA checks
+-- comment: Handy for computing order age directly in queries and for SLA checks 
 
 DELIMITER $$
 CREATE FUNCTION order_age(order_date DATE)
