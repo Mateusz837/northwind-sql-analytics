@@ -11,6 +11,7 @@ The analysis was designed as a portfolio project for Data Analyst and BI Analyst
 ## Tech Stack
 - **Database:** MySQL
 - **Query Language:** SQL
+- **Tools:** MySQL Workbench
 
 ---
 
