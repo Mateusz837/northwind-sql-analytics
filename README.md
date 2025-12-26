@@ -62,7 +62,6 @@ northwind-sql-analytics/
     ├── 06_udf.sql
     └── 07_procedures.sql
 ```
-
  ---
 
 ## How to Use
