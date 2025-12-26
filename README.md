@@ -51,8 +51,7 @@ The analysis was designed as a portfolio project for Data Analyst and BI Analyst
 ```
 northwind-sql-analytics/
 ├── README.md
-├── docs/
-│   └── Northwind_SQL_Portfolio.pdf
+├── Northwind_SQL_Portfolio.pdf
 └── sql/
     ├── 01_foundational_analysis.sql
     ├── 02_temporal_analysis.sql
