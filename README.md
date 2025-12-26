@@ -74,6 +74,7 @@ northwind-sql-analytics/
 ---
 
 ## Notes
-This project prioritizes analytical clarity and business relevance. It was designed as a portfolio case study, focusing on demonstrating sound SQL practices, clear logic, and meaningful business insights rather than production-level performance tuning
+This project prioritizes analytical clarity and business relevance. It was designed as a portfolio case study, focusing on demonstrating sound SQL practices, clear logic, and practical business context rather than production-level performance tuning.
+
 
 
