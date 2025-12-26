@@ -67,8 +67,9 @@ northwind-sql-analytics/
 
 ## How to Use
 - SQL files in the `sql/` directory contain queries grouped by analytical modules and topics.
-- `Northwind_SQL_Results.pdf` provides screenshots of query results with short business-oriented explanations (without SQL code).
+- `Northwind_SQL_Results.pdf` shows selected query outputs with short comments explaining how such results could be used in practice.
 - Queries are written in MySQL syntax and can be executed directly against the Northwind sample database.
+
 
 ---
 
