@@ -2,9 +2,9 @@
 
 ## Overview
 
-This repository contains a SQL-based data analysis case study built on the classic Northwind sample database. The project applies analytical and business-oriented SQL techniques to answer practical questions related to revenue trends, customer behavior, retention, and operational performance.
+This repository contains a SQL-based data analysis case study built on the classic Northwind sample database. The project applies analytical and business-oriented SQL techniques to explore practical questions related to revenue trends, customer behavior, retention, and operational performance.
 
-The analysis was designed as a portfolio project for Data Analyst and BI Analyst roles. It emphasizes clear query structure, readability, and meaningful business interpretation, while leveraging advanced SQL concepts such as common table expressions (CTEs), window functions, cohort analysis, and reusable database objects to produce actionable insights.
+The analysis was designed as a portfolio project for Data Analyst and BI Analyst roles. It emphasizes clear query structure, readability, and practical business context, while leveraging advanced SQL concepts such as common table expressions (CTEs), window functions, cohort analysis, and reusable database objects.
 
 ---
 
